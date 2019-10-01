@@ -57,14 +57,14 @@
 
   <meta name="keywords" content="算法,学习记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="01迷宫">
-<meta property="og:url" content="https://rziyang.github.io/2019/09/27/01迷宫/index.html">
+<meta property="og:title" content="快速幂和矩阵的快速幂">
+<meta property="og:url" content="https://rziyang.github.io/6b81fe2c/index.html">
 <meta property="og:site_name" content="RZIYang 的博客">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-01T10:10:33.748Z">
+<meta property="og:updated_time" content="2019-10-01T10:11:22.098Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="01迷宫">
-  <link rel="canonical" href="https://rziyang.github.io/2019/09/27/01迷宫/">
+<meta name="twitter:title" content="快速幂和矩阵的快速幂">
+  <link rel="canonical" href="https://rziyang.github.io/6b81fe2c/">
 
 
 <script id="page-configurations">
@@ -78,7 +78,7 @@
   };
 </script>
 
-  <title>01迷宫 | RZIYang 的博客</title>
+  <title>快速幂和矩阵的快速幂 | RZIYang 的博客</title>
   
 
 
@@ -234,7 +234,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/2019/09/27/01迷宫/">
+    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/6b81fe2c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="RZIYang">
@@ -246,7 +246,7 @@
       <meta itemprop="name" content="RZIYang 的博客">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">01迷宫
+        <h1 class="post-title" itemprop="name headline">快速幂和矩阵的快速幂
 
           
         </h1>
@@ -262,7 +262,7 @@
                 
               
 
-              <time title="创建时间：2019-09-27 23:57:29" itemprop="dateCreated datePublished" datetime="2019-09-27T23:57:29+08:00">2019-09-27</time>
+              <time title="创建时间：2019-09-21 18:04:15" itemprop="dateCreated datePublished" datetime="2019-09-21T18:04:15+08:00">2019-09-21</time>
             </span>
           
             
@@ -273,7 +273,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-01 18:10:33" itemprop="dateModified" datetime="2019-10-01T18:10:33+08:00">2019-10-01</time>
+                <time title="修改时间：2019-10-01 18:11:22" itemprop="dateModified" datetime="2019-10-01T18:11:22+08:00">2019-10-01</time>
               </span>
             
           
@@ -300,7 +300,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>1.3k</span>
+              <span>1.7k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -310,7 +310,7 @@
               
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
           
 
@@ -324,10 +324,25 @@
 
       
         <p><strong><a id="more"></a></strong></p>
-<p><strong><em>01迷宫</em></strong></p>
-<p><a href="https://www.luogu.org/problem/P1141" target="_blank" rel="noopener">题目链接(洛谷)</a></p>
-<p>这题主要是理解题目意思，我一开始以为这题描述的是求能走的最长路径，后来wa了找不出问题，看了题解才知道原来不是求最长路径，而是求从某点能到达的所有的点的总数（包括自己）。理解了题意就容易了，我用的方法是先dfs+染色，再根据输入的位置来输出结果。代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">1001</span>][<span class="number">1001</span>],book[<span class="number">1001</span>][<span class="number">1001</span>],f[<span class="number">1000001</span>],n,m;<span class="comment">//数组a保存地图，数组book记录染色情况，数组f记录某个颜色总大小 </span></span><br><span class="line"><span class="keyword">int</span> next[<span class="number">4</span>][<span class="number">2</span>]=&#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">-1</span>,<span class="number">-1</span>,<span class="number">0</span>&#125;;<span class="comment">//前进的方向 </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;<span class="comment">//快读</span></span><br><span class="line">	<span class="keyword">char</span> ch=getchar();</span><br><span class="line">	<span class="keyword">while</span>(ch!=<span class="string">'1'</span> &amp;&amp; ch!=<span class="string">'0'</span>) ch=getchar();</span><br><span class="line">	<span class="keyword">return</span> ch&amp;<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> aa,<span class="keyword">int</span> bb,<span class="keyword">int</span> color)</span></span>&#123;<span class="comment">//aa和bb为位置，color为当前染色的颜色 </span></span><br><span class="line">	<span class="keyword">int</span> tx,ty;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">4</span>;i++)&#123;</span><br><span class="line">		tx=aa+next[i][<span class="number">0</span>];</span><br><span class="line">		ty=bb+next[i][<span class="number">1</span>];</span><br><span class="line">		<span class="keyword">if</span>(tx&lt;<span class="number">1</span> || ty&lt;<span class="number">1</span> || tx&gt;n || ty&gt;n || book[tx][ty] || a[tx][ty]==a[aa][bb]) <span class="keyword">continue</span>;</span><br><span class="line">		f[color]++;</span><br><span class="line">		book[tx][ty]=color;</span><br><span class="line">		dfs(tx,ty,color);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			a[i][j]=read();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> c=<span class="number">1</span>;<span class="comment">//颜色 </span></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(!book[i][j]) &#123;<span class="comment">//当前点未经过染色</span></span><br><span class="line">				f[c]=<span class="number">1</span>;<span class="comment">//把当前点也记录进去 </span></span><br><span class="line">				book[i][j]=c;<span class="comment">//开始染色 </span></span><br><span class="line">				dfs(i,j,c++);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> x,y; </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=m;i++)&#123;<span class="comment">//读入点的坐标 </span></span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d %d"</span>,&amp;x,&amp;y);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d"</span>,f[book[x][y]]);<span class="comment">//输出当前颜色占据的总大小，即当前点能到达的所有的点的数目 </span></span><br><span class="line">		<span class="keyword">if</span>(i!=m) <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="快速幂和矩阵的快速幂"><a href="#快速幂和矩阵的快速幂" class="headerlink" title="快速幂和矩阵的快速幂"></a>快速幂和矩阵的快速幂</h3><p>求a<sup>n</sup>的值，可以一个一个乘起来，也可以转化为其他多个数想乘，例如a<sup>n</sup>=a<sup>n/2</sup>* a<sup>n/2</sup>=a<sup>n/3</sup>* a<sup>n/3</sup>* a<sup>n/3</sup>=…，当n的值非常大的时候，这两种求法效率明显不够高，所以就有大佬想出了快速幂的算法，快速幂算法的主要代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> res=<span class="number">1</span>;<span class="comment">//res为记录结果的变量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">pow</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(n)&#123;</span><br><span class="line">		<span class="keyword">if</span>(n&amp;<span class="number">1</span>) res*=a;</span><br><span class="line">		n&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">		a*=a;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果看代码无法理解（反正我直接看代码是没理解），则可以结合例子看代码：</p>
+<blockquote>
+<p>2<sup>76</sup>=2<sup>01001100B(2进制)</sup>=2<sup>100B</sup>* 2<sup>1000B</sup>* 2<sup>1000000B</sup>=2<sup>4</sup>* 2<sup>8</sup> * 2<sup>64</sup></p>
+</blockquote>
+<p>而矩阵的快速幂算法则差不多是一样的，下面为题目贴图和代码：</p>
+<blockquote>
+<p><strong>方阵的阶乘</strong></p>
+<p><strong>描述</strong></p>
+<p>给定一个N阶方阵A，输出A的M次幂对10000求余的值（M是非负整数）</p>
+<p><strong>输入</strong></p>
+<p>第一行是一个正整数N、M（1&lt;=N&lt;=50, 0&lt;=M&lt;=7.5e18），表示方阵A的阶数和要求的幂数</p>
+<p>接下来N行，每行N个绝对值不超过10的非负整数，描述方阵A的值</p>
+<p><strong>输出</strong></p>
+<p>输出共N行，每行N个整数，表示A的M次幂所对应的方阵对10000求余数。相邻的数之间用一个空格隔开</p>
+</blockquote>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">51</span>][<span class="number">51</span>],b[<span class="number">51</span>][<span class="number">51</span>];<span class="comment">//a为当前输入的矩阵，b为记录结果的矩阵 </span></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">cheng</span><span class="params">(<span class="keyword">int</span> x[][<span class="number">51</span>],<span class="keyword">int</span> y[][<span class="number">51</span>])</span></span>&#123;<span class="comment">//x*=y(x和y为矩阵)</span></span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>,z[<span class="number">51</span>][<span class="number">51</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>;k&lt;=n;k++)&#123;</span><br><span class="line">				sum+=x[i][k]*y[k][j];</span><br><span class="line">			&#125;</span><br><span class="line">			z[i][j]=sum%<span class="number">10000</span>;</span><br><span class="line">			sum=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			x[i][j]=z[i][j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mi</span><span class="params">(<span class="keyword">int</span> x[][<span class="number">51</span>],<span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> m)</span></span>&#123; </span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			<span class="keyword">if</span>(i==j) b[i][j]=<span class="number">1</span>;<span class="comment">//注意记录结果的数组初始值设置 </span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(m)&#123; <span class="comment">//主要代码 </span></span><br><span class="line">		<span class="keyword">if</span>(m&amp;<span class="number">1</span>)&#123;</span><br><span class="line">			cheng(b,x);</span><br><span class="line">		&#125;</span><br><span class="line">		m&gt;&gt;=<span class="number">1</span>;</span><br><span class="line">		cheng(x,x);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> <span class="keyword">int</span> m;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d %lld"</span>,&amp;n,&amp;m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;a[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	mi(a,m);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d"</span>,b[i][j]);</span><br><span class="line">			<span class="keyword">if</span>(j!=n) <span class="built_in">printf</span>(<span class="string">" "</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(i!=n) <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -345,7 +360,7 @@
     <strong>本文作者： </strong>RZIYang</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://rziyang.github.io/2019/09/27/01迷宫/" title="01迷宫">https://rziyang.github.io/2019/09/27/01迷宫/</a>
+    <a href="https://rziyang.github.io/6b81fe2c/" title="快速幂和矩阵的快速幂">https://rziyang.github.io/6b81fe2c/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -372,8 +387,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/09/21/快速幂和矩阵的快速幂/" rel="next" title="快速幂和矩阵的快速幂">
-                  <i class="fa fa-chevron-left"></i> 快速幂和矩阵的快速幂
+                <a href="/21fcb834/" rel="next" title="To Fill or Not to Fill">
+                  <i class="fa fa-chevron-left"></i> To Fill or Not to Fill
                 </a>
               
             </div>
@@ -382,8 +397,8 @@
 
             <div class="post-nav-prev post-nav-item">
               
-                <a href="/2019/09/30/题解（补）/" rel="prev" title="题解">
-                  题解 <i class="fa fa-chevron-right"></i>
+                <a href="/d877abb7/" rel="prev" title="01迷宫">
+                  01迷宫 <i class="fa fa-chevron-right"></i>
                 </a>
               
             </div>
@@ -436,6 +451,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#快速幂和矩阵的快速幂"><span class="nav-text">快速幂和矩阵的快速幂</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -643,7 +660,7 @@ setInterval("createtime()",250);
       repo: 'gitalk',
       owner: 'RZIYang',
       admin: ['RZIYang'],
-      id: '465ec31c1a787b8f53b495040dfeb432',
+      id: '2fbb7c0d3c3570951f9f63d0285744e3',
         language: 'zh-CN',
       
       distractionFreeMode: 'true'
