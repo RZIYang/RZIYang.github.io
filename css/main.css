@@ -1723,7 +1723,7 @@ article:last-child .post-eof {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #fff;
+  background: #121f2a;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2865,8 +2865,8 @@ ul.breadcrumb li + li:last-child {
   margin-bottom: 60px;
   padding: 25px;
   background: rgba(255,255,255,0.8) none repeat scroll !important;
-  -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
-  -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
+  -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.8);
+  -moz-box-shadow: 0 0 5px rgba(202,203,204,0.8);
 }
 body {
   background: url("/images/background1.jpeg");
