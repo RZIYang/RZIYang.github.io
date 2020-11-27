@@ -55,15 +55,16 @@
   };
 </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="test">
-<meta property="og:url" content="https://rziyang.github.io/d87f7e0c/index.html">
+  <meta name="keywords" content="LeetCode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode Problem#3 解题思路">
+<meta property="og:url" content="https://rziyang.github.io/892ce412/index.html">
 <meta property="og:site_name" content="RZIYang&#39;Blog">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-01T12:51:38.655Z">
+<meta property="og:updated_time" content="2020-11-27T07:39:41.856Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="test">
-  <link rel="canonical" href="https://rziyang.github.io/d87f7e0c/">
+<meta name="twitter:title" content="LeetCode Problem#3 解题思路">
+  <link rel="canonical" href="https://rziyang.github.io/892ce412/">
 
 
 <script id="page-configurations">
@@ -77,7 +78,7 @@
   };
 </script>
 
-  <title>test | RZIYang'Blog</title>
+  <title>LeetCode Problem#3 解题思路 | RZIYang'Blog</title>
   
 
 
@@ -233,7 +234,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/d87f7e0c/">
+    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/892ce412/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="RZIYang">
@@ -245,7 +246,7 @@
       <meta itemprop="name" content="RZIYang'Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">test
+        <h1 class="post-title" itemprop="name headline">LeetCode Problem#3 解题思路
 
           
         </h1>
@@ -261,20 +262,25 @@
                 
               
 
-              <time title="创建时间：2019-08-17 18:03:14" itemprop="dateCreated datePublished" datetime="2019-08-17T18:03:14+08:00">2019-08-17</time>
+              <time title="创建时间：2020-11-27 14:20:16 / 修改时间：15:39:41" itemprop="dateCreated datePublished" datetime="2020-11-27T14:20:16+08:00">2020-11-27</time>
             </span>
           
             
 
             
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-01 20:51:38" itemprop="dateModified" datetime="2019-10-01T20:51:38+08:00">2019-10-01</time>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
               </span>
-            
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/题解/" itemprop="url" rel="index"><span itemprop="name">题解</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -289,7 +295,20 @@
 
       
         <p><strong><a id="more"></a></strong></p>
-<p>…测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测</p>
+<p><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">题目传送</a></p>
+<p>题目概述：给出字符串 s ，找出它的没有重复字符的最长子串</p>
+<p>思路1（错误思路）:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; mp;</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>, tmp = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(mp.find(s[i]) != mp.end()) &#123;</span><br><span class="line">                tmp = i - mp[s[i]];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                tmp += <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mp[s[i]] = i;</span><br><span class="line">            result = result &lt; tmp ? tmp : result;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>上面代码在测试用例为”abba”的时候出现问题。因为上面第11行的代码，我的想法是如果当前遍历到的字符是重复字符，那就从已经遍历过的字符的下一个字符开始计数，当遍历到”abba”的第二个a的时候，由于mp(map)中已经有了a字符，它会将tmp设置为3，实际上这个子串有重复字符，所以错了。</p>
+<p>后来我想到，既然已经遍历到了重复的字符，那么mp里面value小于第一个重复字符的下标的字符都可以当作删掉了。</p>
+<p>思路2（思路1的进化版，然而还是没AC。。。）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; mp;</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>, tmp = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> del = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(mp.find(s[i]) != mp.end()) &#123;</span><br><span class="line">                <span class="keyword">if</span>(del &lt; mp[s[i]]) &#123;</span><br><span class="line">                    del = mp[s[i]];</span><br><span class="line">                    tmp = i - mp[s[i]];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    tmp += <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                tmp += <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mp[s[i]] = i;</span><br><span class="line">            result = result &lt; tmp ? tmp : result;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>没有通过的测试样例是”abcabcbb”，同时我自己测的”abab”也过不了。原因在于del的初始化。。。我把它初始化为0了。。。然后遍历到第二个a的时候，12行条件语句判断之后就会进入else语句，tmp+1。这是明显错误的。将del初始化为-1就可以ac了。</p>
+<p>思路3（最终AC代码）:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">char</span>, <span class="keyword">int</span>&gt; mp;</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>, tmp = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> del = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(mp.find(s[i]) != mp.end()) &#123;</span><br><span class="line">                <span class="keyword">if</span>(del &lt; mp[s[i]]) &#123;</span><br><span class="line">                    del = mp[s[i]];</span><br><span class="line">                    tmp = i - mp[s[i]];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    tmp += <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                tmp += <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mp[s[i]] = i;</span><br><span class="line">            result = result &lt; tmp ? tmp : result;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -306,7 +325,7 @@
     <strong>本文作者： </strong>RZIYang</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://rziyang.github.io/d87f7e0c/" title="test">https://rziyang.github.io/d87f7e0c/</a>
+    <a href="https://rziyang.github.io/892ce412/" title="LeetCode Problem#3 解题思路">https://rziyang.github.io/892ce412/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -316,14 +335,23 @@
       
 
       <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
+            
+          </div>
+        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/3e4ccedd/" rel="next" title="关于搭建博客的想法">
-                  <i class="fa fa-chevron-left"></i> 关于搭建博客的想法
+                <a href="/614fd3b1/" rel="next" title="贪心-区间调度问题">
+                  <i class="fa fa-chevron-left"></i> 贪心-区间调度问题
                 </a>
               
             </div>
@@ -331,10 +359,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/a1f432c7/" rel="prev" title="算法基础——渐近记号">
-                  算法基础——渐近记号 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -402,7 +426,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -415,7 +439,7 @@
             <a href="/categories/">
           
         
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -428,7 +452,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -593,7 +617,7 @@ setInterval("createtime()",250);
       repo: 'gitalk',
       owner: 'RZIYang',
       admin: ['RZIYang'],
-      id: '6c21df7f69861ab514aebb6f6fe3fab9',
+      id: 'c2fd16d33bf7ddbd8d3cd7b7a08ca82f',
         language: 'zh-CN',
       
       distractionFreeMode: 'true'
