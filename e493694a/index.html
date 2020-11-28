@@ -55,16 +55,16 @@
   };
 </script>
 
-  <meta name="keywords" content="DFS">
+  <meta name="keywords" content="LeetCode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="01迷宫">
-<meta property="og:url" content="https://rziyang.github.io/d877abb7/index.html">
+<meta property="og:title" content="LeetCode Problem#5 题解">
+<meta property="og:url" content="https://rziyang.github.io/e493694a/index.html">
 <meta property="og:site_name" content="RZIYang&#39;Blog">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-08-10T09:19:35.811Z">
+<meta property="og:updated_time" content="2020-11-28T14:42:28.068Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="01迷宫">
-  <link rel="canonical" href="https://rziyang.github.io/d877abb7/">
+<meta name="twitter:title" content="LeetCode Problem#5 题解">
+  <link rel="canonical" href="https://rziyang.github.io/e493694a/">
 
 
 <script id="page-configurations">
@@ -78,7 +78,7 @@
   };
 </script>
 
-  <title>01迷宫 | RZIYang'Blog</title>
+  <title>LeetCode Problem#5 题解 | RZIYang'Blog</title>
   
 
 
@@ -234,7 +234,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/d877abb7/">
+    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/e493694a/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="RZIYang">
@@ -246,7 +246,7 @@
       <meta itemprop="name" content="RZIYang'Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">01迷宫
+        <h1 class="post-title" itemprop="name headline">LeetCode Problem#5 题解
 
           
         </h1>
@@ -262,19 +262,11 @@
                 
               
 
-              <time title="创建时间：2019-09-27 23:57:29" itemprop="dateCreated datePublished" datetime="2019-09-27T23:57:29+08:00">2019-09-27</time>
+              <time title="创建时间：2020-11-28 21:10:50 / 修改时间：22:42:28" itemprop="dateCreated datePublished" datetime="2020-11-28T21:10:50+08:00">2020-11-28</time>
             </span>
           
             
 
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-10 17:19:35" itemprop="dateModified" datetime="2020-08-10T17:19:35+08:00">2020-08-10</time>
-              </span>
             
           
             <span class="post-meta-item">
@@ -303,10 +295,14 @@
 
       
         <p><strong><a id="more"></a></strong></p>
-<p><strong><em>01迷宫</em></strong></p>
-<p><a href="https://www.luogu.org/problem/P1141" target="_blank" rel="noopener">题目链接(洛谷)</a></p>
-<p>这题主要是理解题目意思，我一开始以为这题描述的是求能走的最长路径，后来wa了找不出问题，看了题解才知道原来不是求最长路径，而是求从某点能到达的所有的点的总数（包括自己）。理解了题意就容易了，我用的方法是先dfs+染色，再根据输入的位置来输出结果。代码如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">1001</span>][<span class="number">1001</span>], book[<span class="number">1001</span>][<span class="number">1001</span>], f[<span class="number">1000001</span>], n, m; <span class="comment">//数组a保存地图，数组book记录染色情况，数组f记录某个颜色总大小</span></span><br><span class="line"><span class="keyword">int</span> next[<span class="number">4</span>][<span class="number">2</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">-1</span>, <span class="number">0</span>&#125;; <span class="comment">//前进的方向</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">void</span>)</span> <span class="comment">//快读</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> ch = getchar();</span><br><span class="line">    <span class="keyword">while</span>(ch != <span class="string">'1'</span> &amp;&amp; ch != <span class="string">'0'</span>) ch = getchar();</span><br><span class="line">    <span class="keyword">return</span> ch &amp; <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> aa, <span class="keyword">int</span> bb, <span class="keyword">int</span> color)</span> <span class="comment">//aa和bb为位置，color为当前染色的颜色</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> tx, ty;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">        tx = aa + next[i][<span class="number">0</span>];</span><br><span class="line">        ty = bb + next[i][<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span>(tx &lt; <span class="number">1</span> || ty &lt; <span class="number">1</span> || tx &gt; n || ty &gt; n || book[tx][ty] || a[tx][ty] == a[aa][bb]) <span class="keyword">continue</span>;</span><br><span class="line">        f[color]++;</span><br><span class="line">        book[tx][ty] = color;</span><br><span class="line">        dfs(tx, ty, color);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">            a[i][j] = read();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> c = <span class="number">1</span>; <span class="comment">//颜色</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(!book[i][j]) &#123;<span class="comment">//当前点未经过染色</span></span><br><span class="line">                f[c] = <span class="number">1</span>; <span class="comment">//把当前点也记录进去</span></span><br><span class="line">                book[i][j] = c; <span class="comment">//开始染色</span></span><br><span class="line">                dfs(i, j, c++);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> x, y;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i++) &#123; <span class="comment">//读入点的坐标</span></span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;x, &amp;y);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d"</span>, f[book[x][y]]); <span class="comment">//输出当前颜色占据的总大小，即当前点能到达的所有的点的数目</span></span><br><span class="line">        <span class="keyword">if</span>(i != m) <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://leetcode.com/problems/longest-palindromic-substring" target="_blank" rel="noopener">题目传送</a></p>
+<p>题意：给出字符串 s ，返回最长回文子串。1 &lt;= s.length &lt;= 1000</p>
+<p>思路一（TLE）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">longestPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line">        <span class="built_in">string</span> res = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">int</span> maxLen = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; i + j &lt;= len; j++) &#123;</span><br><span class="line">                <span class="built_in">string</span> str = s.substr(i, j);</span><br><span class="line">                <span class="built_in">string</span> pstr = str;</span><br><span class="line">                reverse(pstr.begin(), pstr.end());</span><br><span class="line">                <span class="keyword">if</span>(pstr.compare(str) == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(j &gt; maxLen) &#123;</span><br><span class="line">                        res = str;</span><br><span class="line">                        maxLen = j;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>两层循环，遍历所有子串，然后判断该字串是否是回文字符串。不出意外地 TLE 了。然后想半天想不到思路，看了 Solution （<a href="https://leetcode.com/problems/longest-palindromic-substring/solution/" target="_blank" rel="noopener">链接</a>），然后我选择的是第4个方法。从第一个遍历到最后一个字符，让每个字符当作回文的中心字符，然后得到最长的回文字串。</p>
+<p>思路二（AC 代码）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">longestPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> lenS = s.length();		<span class="comment">// 记录字符串的长度，便于直接使用，而不是用一次调用一次length方法</span></span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">-1</span>, length = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lenS; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> oddLen = lenOfPalindrome(s, i, i);		<span class="comment">// 假设回文子串为奇数长度</span></span><br><span class="line">            <span class="keyword">int</span> evenLen = lenOfPalindrome(s, i, i + <span class="number">1</span>);	<span class="comment">// 假设回文子串为偶数长度</span></span><br><span class="line">            <span class="keyword">if</span>(length &lt; oddLen) &#123;		<span class="comment">// 记录最长长度时的开始字符和长度</span></span><br><span class="line">                start = i - oddLen / <span class="number">2</span>;</span><br><span class="line">                length = oddLen;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(length &lt; evenLen) &#123;		<span class="comment">// 同上</span></span><br><span class="line">                start = i - evenLen / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                length = evenLen;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.substr(start, length);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lenOfPalindrome</span><span class="params">(<span class="built_in">string</span> str, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span>	<span class="comment">// 对str字符串从left向左遍历，从right向右遍历</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> lenStr = str.length();</span><br><span class="line">        <span class="keyword">while</span>(left &gt;= <span class="number">0</span> &amp;&amp; right &lt; lenStr &amp;&amp; str[left] == str[right]) &#123;</span><br><span class="line">            left--;</span><br><span class="line">            right++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> right - left - <span class="number">1</span>;	<span class="comment">// 返回长度</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -324,7 +320,7 @@
     <strong>本文作者： </strong>RZIYang</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://rziyang.github.io/d877abb7/" title="01迷宫">https://rziyang.github.io/d877abb7/</a>
+    <a href="https://rziyang.github.io/e493694a/" title="LeetCode Problem#5 题解">https://rziyang.github.io/e493694a/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -339,7 +335,7 @@
           
           <div class="post-tags">
             
-              <a href="/tags/DFS/" rel="tag"><i class="fa fa-tag"></i> DFS</a>
+              <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
             
           </div>
         
@@ -349,8 +345,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/6b81fe2c/" rel="next" title="快速幂和矩阵的快速幂">
-                  <i class="fa fa-chevron-left"></i> 快速幂和矩阵的快速幂
+                <a href="/892ce412/" rel="next" title="LeetCode Problem#3 解题思路">
+                  <i class="fa fa-chevron-left"></i> LeetCode Problem#3 解题思路
                 </a>
               
             </div>
@@ -358,10 +354,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/fbf2b730/" rel="prev" title="题解">
-                  题解 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -620,7 +612,7 @@ setInterval("createtime()",250);
       repo: 'gitalk',
       owner: 'RZIYang',
       admin: ['RZIYang'],
-      id: '996aacd55e003a12e4fc7fecd9ded593',
+      id: '1a4913c00f98e7cf77ec760f5f4b71db',
         language: 'zh-CN',
       
       distractionFreeMode: 'true'
