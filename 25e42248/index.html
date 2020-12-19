@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="keywords" content="图像分割,数据挖掘,k-means">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Java]基于k-means算法的图像分割">
+<meta property="og:url" content="https://rziyang.github.io/25e42248/index.html">
+<meta property="og:site_name" content="RZIYang&#39;Blog">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-12-19T05:01:15.254Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Java]基于k-means算法的图像分割">
+  <link rel="canonical" href="https://rziyang.github.io/25e42248/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>[Java]基于k-means算法的图像分割 | RZIYang'Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">RZIYang'Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">人生一世，草木一秋，瞑目皆归泥</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/25e42248/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="RZIYang">
+      <meta itemprop="description" content="努力成为繁星中的一颗">
+      <meta itemprop="image" content="/images/head.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RZIYang'Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">[Java]基于k-means算法的图像分割
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-12-19 00:15:01 / 修改时间：13:01:15" itemprop="dateCreated datePublished" datetime="2020-12-19T00:15:01+08:00">2020-12-19</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java编程/" itemprop="url" rel="index"><span itemprop="name">Java编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong><a id="more"></a></strong></p>
+<p>文章的开头先介绍一下 k-means 算法：</p>
+<blockquote>
+<p>输入：</p>
+<p>​            k：簇的数目</p>
+<p>​            D：包含n个对象的数据集。</p>
+<p>输出：    k个簇的集合</p>
+<p>步骤：</p>
+<p>​    （1）从D中任意选择k个对象最为初始簇中心。</p>
+<p>​    （2）根据簇中对象的均值，将每个对象分配到最相似的簇。</p>
+<p>​    （3）更新簇均值，即重新计算每个簇中对象的均值。</p>
+<p>​    （4）重复步骤（2）和步骤（3）直到簇均值不再变化。        </p>
+</blockquote>
+<p>​        我这里使用的是基于聚类的图像分割，k-means算法是进行基于聚类的图像分割的经典算法，这个算法有在使用时有一些缺陷：</p>
+<p>​        （1）结果容易被初始簇中心的选择所影响，容易陷入局部最优。</p>
+<p>​        （2）聚类的效果非常依赖于k值的选择。k值过小，分割效果不明显。k值过大，图像的细节会过于明显。</p>
+<p>​        由于能力有限，我写的k-means算法的优化的方面主要有两个：</p>
+<p>​        （1）初始簇中心的选择，通过将图片像素灰度化（将RGB值按3:6:1计算得出），按照灰度值排序，然后将数据集k等分，取每个等分的平均值（灰度值）作为簇类中心的值（灰度值，R=G=B=灰度值）。</p>
+<p>​        （2）使用拐点法和平均轮廓系数法，根据程序运行输出的误差平方和（SSE）和平均轮廓系数，绘制折线图，然后根据折线图确认k值。</p>
+<p>代码：</p>
+<ol>
+<li><p>dataItem.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bigData;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">dataItem</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> r;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> g;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> b;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> grayScale;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> group;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">sortDataItem</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">sortDataItem</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> dataItem di;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> width;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> height;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">sortDataItem</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        di = <span class="keyword">new</span> dataItem();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(sortDataItem s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.di.grayScale != s.di.grayScale) <span class="keyword">return</span> <span class="keyword">this</span>.di.grayScale &lt; s.di.grayScale ? <span class="number">1</span> : -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ImageCluster.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bigData;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.awt.Color;</span><br><span class="line"><span class="keyword">import</span> java.awt.image.BufferedImage;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> javax.imageio.ImageIO;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ImageCluster</span> </span>&#123;</span><br><span class="line">    <span class="comment">//主要功能就是读取一副图像，再对图像进行分割</span></span><br><span class="line">    <span class="comment">//需要分类的簇数</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> k;</span><br><span class="line">    <span class="comment">//迭代次数</span></span><br><span class="line">    <span class="comment">//private int m;</span></span><br><span class="line">    <span class="comment">//数据集合</span></span><br><span class="line">    <span class="keyword">private</span> dataItem[][] source;</span><br><span class="line">    <span class="comment">//簇类中心集合</span></span><br><span class="line">    <span class="keyword">private</span> dataItem[] center;</span><br><span class="line">    <span class="comment">//统计每个簇的像素点的总和，用于计算新的簇类中心</span></span><br><span class="line">    <span class="keyword">private</span> dataItem[] centerSum;</span><br><span class="line">    <span class="comment">// 图片的宽高</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> width;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> height;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        center = <span class="keyword">null</span>;</span><br><span class="line">        centerSum = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//读取指定目录的图片数据，并且写入数组，这个数据要继续处理</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[][] getImageData(String path) &#123;</span><br><span class="line">        BufferedImage bi = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            bi = ImageIO.read(<span class="keyword">new</span> File(path));</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        width = bi.getWidth();</span><br><span class="line">        height = bi.getHeight();</span><br><span class="line">        <span class="keyword">int</span>[][] data = <span class="keyword">new</span> <span class="keyword">int</span>[width][height];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; width; i++)</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; height; j++)</span><br><span class="line">                data[i][j] = bi.getRGB(i, j);</span><br><span class="line">        <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//用来得到灰度值，使用加权平均法，rgb取3:6:1</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getGrayScale</span><span class="params">(<span class="keyword">int</span> r, <span class="keyword">int</span> g, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (r * <span class="number">3</span> + g * <span class="number">6</span> + b) / <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//用来处理获取的像素数据，将整型数组的值转化为RGB值，存储进dataItem类型的二维数组中，返回二维数组</span></span><br><span class="line">    <span class="keyword">private</span> dataItem[][] InitData(<span class="keyword">int</span>[][] data) &#123;</span><br><span class="line">        dataItem[][] dataitems = <span class="keyword">new</span> dataItem[data.length][data[<span class="number">0</span>].length];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; data.length; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; data[<span class="number">0</span>].length; j++) &#123;</span><br><span class="line">                dataItem di = <span class="keyword">new</span> dataItem();</span><br><span class="line">                Color c = <span class="keyword">new</span> Color(data[i][j]);</span><br><span class="line"></span><br><span class="line">                di.r = c.getRed();</span><br><span class="line">                di.g = c.getGreen();</span><br><span class="line">                di.b = c.getBlue();</span><br><span class="line">                di.grayScale = getGrayScale(di.r, di.g, di.b);</span><br><span class="line">                di.group = <span class="number">1</span>;</span><br><span class="line">                dataitems[i][j] = di;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dataitems;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//将排好序的数据k等分然后返回各个等分的平均数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAverage</span><span class="params">(sortDataItem[] s, <span class="keyword">int</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> begin = s.length / k * t;</span><br><span class="line">        <span class="keyword">int</span> end = s.length / k * (t + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = begin; i &lt; end; i++) &#123;</span><br><span class="line">            sum += s[i].di.grayScale;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum / (s.length / k);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//生成初始中心,初始化中心通过将像素点按照灰度值排序，然后k等分，在等分后的各个部分中取像素的平均数作为每个聚类初始中心</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initCenters</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        center = <span class="keyword">new</span> dataItem[k];</span><br><span class="line">        centerSum = <span class="keyword">new</span> dataItem[k];<span class="comment">//用来统计每个聚类里面的RGB分别之和，方便计算均值</span></span><br><span class="line">        <span class="comment">//初始化sortDI</span></span><br><span class="line">        sortDataItem[] sortDI = <span class="keyword">new</span> sortDataItem[width * height];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; sortDI.length; i++) &#123;</span><br><span class="line">            sortDI[i] = <span class="keyword">new</span> sortDataItem();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//将数据存储进sortDI中</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; width; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; height; j++) &#123;</span><br><span class="line">                sortDI[i * height + j].di = source[i][j];</span><br><span class="line">                sortDI[i * height + j].width = i;</span><br><span class="line">                sortDI[i * height + j].height = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//排序</span></span><br><span class="line">        Arrays.sort(sortDI, sortDataItem::compareTo);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            dataItem cent = <span class="keyword">new</span> dataItem();</span><br><span class="line">            dataItem cent2 = <span class="keyword">new</span> dataItem();</span><br><span class="line"></span><br><span class="line">            cent.group = i;</span><br><span class="line">            <span class="keyword">int</span> gs = getAverage(sortDI, i);</span><br><span class="line">            cent.r = gs;</span><br><span class="line">            cent.g = gs;</span><br><span class="line">            cent.b = gs;</span><br><span class="line">            cent.grayScale = gs;</span><br><span class="line">            center[i] = cent;</span><br><span class="line"></span><br><span class="line">            cent2.r = <span class="number">0</span>;</span><br><span class="line">            cent2.g = <span class="number">0</span>;</span><br><span class="line">            cent2.b = <span class="number">0</span>;</span><br><span class="line">            cent2.grayScale = <span class="number">0</span>;</span><br><span class="line">            cent2.group = <span class="number">0</span>;</span><br><span class="line">            centerSum[i] = cent2;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算两个像素之间的RGB的欧几里得距离</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">distance</span><span class="params">(dataItem first, dataItem second)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Math.sqrt((first.r - second.r) * (first.r - second.r) +</span><br><span class="line">                (first.g - second.g) * (first.g - second.g) +</span><br><span class="line">                (first.b - second.b) * (first.b - second.b));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//返回一个数组中最小的坐标</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">minDistance</span><span class="params">(<span class="keyword">double</span>[] distance)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> minDistance = distance[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> minLocation = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; distance.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (distance[i] &lt; minDistance) &#123;</span><br><span class="line">                minDistance = distance[i];</span><br><span class="line">                minLocation = i;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (distance[i] == minDistance) &#123;</span><br><span class="line">                <span class="keyword">if</span> ((Math.random() * <span class="number">10</span>) &lt; <span class="number">5</span>) &#123;</span><br><span class="line">                    minLocation = i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> minLocation;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 每个点进行分类</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">clusterSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> group = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">double</span> distance[] = <span class="keyword">new</span> <span class="keyword">double</span>[k];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; width; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; height; j++) &#123;</span><br><span class="line">                <span class="comment">//求出距离中心点最短的中心</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> q = <span class="number">0</span>; q &lt; k; q++) &#123;</span><br><span class="line">                    distance[q] = distance(center[q], source[i][j]);</span><br><span class="line">                &#125;</span><br><span class="line">                group = minDistance(distance);<span class="comment">//寻找该点最近的中心</span></span><br><span class="line">                source[i][j].group = group;<span class="comment">//把该点进行分类</span></span><br><span class="line"></span><br><span class="line">                centerSum[group].r += source[i][j].r;</span><br><span class="line">                centerSum[group].g += source[i][j].g;</span><br><span class="line">                centerSum[group].b += source[i][j].b;</span><br><span class="line">                <span class="comment">//centerSum[group].grayScale += source[i][j].grayScale;</span></span><br><span class="line">                centerSum[group].group += <span class="number">1</span>;<span class="comment">//这个就是用来统计聚类里有几个点</span></span><br><span class="line">                group = -<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置新的中心</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNewCenter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            <span class="comment">//取平均值为新的中心</span></span><br><span class="line">            center[i].r = (<span class="keyword">int</span>) (centerSum[i].r / centerSum[i].group);</span><br><span class="line">            center[i].g = (<span class="keyword">int</span>) (centerSum[i].g / centerSum[i].group);</span><br><span class="line">            center[i].b = (<span class="keyword">int</span>) (centerSum[i].b / centerSum[i].group);</span><br><span class="line">            center[i].grayScale = getGrayScale(center[i].r, center[i].g, center[i].b);</span><br><span class="line">            center[i].group = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//输出聚类好的数据</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ImagedataOut</span><span class="params">(String path)</span> </span>&#123;</span><br><span class="line">        Color[] c = <span class="keyword">new</span> Color[k];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            c[i] = <span class="keyword">new</span> Color((i + <span class="number">1</span>) * (<span class="number">255</span> / (k + <span class="number">1</span>)),</span><br><span class="line">                    (i + <span class="number">1</span>) * (<span class="number">255</span> / (k + <span class="number">1</span>)),</span><br><span class="line">                    (i + <span class="number">1</span>) * (<span class="number">255</span> / (k + <span class="number">1</span>)));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        BufferedImage nbi = <span class="keyword">new</span> BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; width; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; height; j++) &#123;</span><br><span class="line">                nbi.setRGB(i, j, c[source[i][j].group].getRGB());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ImageIO.write(nbi, <span class="string">"jpg"</span>, <span class="keyword">new</span> File(path));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//进行kmeans计算的核心函数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">kmeans</span><span class="params">(String inPath, <span class="keyword">int</span> maxK, <span class="keyword">int</span> maxM)</span> </span>&#123;</span><br><span class="line">        source = InitData(getImageData(inPath));</span><br><span class="line">        String outPath = <span class="string">"images\\out"</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> t = <span class="number">2</span>; t &lt;= maxK; t++) &#123;</span><br><span class="line">            init();</span><br><span class="line">            k = t;</span><br><span class="line">            <span class="comment">//初始化聚类中心</span></span><br><span class="line">            initCenters(k);</span><br><span class="line">            <span class="comment">//进行最多maxM次聚类</span></span><br><span class="line">            <span class="keyword">int</span> m;</span><br><span class="line">            <span class="keyword">for</span> (m = <span class="number">0</span>; m &lt; maxM; m++) &#123;</span><br><span class="line">                <span class="comment">// 将每个点进行分类</span></span><br><span class="line">                clusterSet();</span><br><span class="line">                <span class="comment">// 临时存储簇类中心的灰度值，用于后续判断灰度值是否改变</span></span><br><span class="line">                <span class="keyword">int</span>[] oldCenter = <span class="keyword">new</span> <span class="keyword">int</span>[k];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">                    oldCenter[i] = center[i].grayScale;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">// 设置新的簇类中心</span></span><br><span class="line">                setNewCenter();</span><br><span class="line">                <span class="comment">// 判断旧的簇类中心和新的簇类中心是否相等，如果相等，说明再进行迭代就没有效果了</span></span><br><span class="line">                <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (oldCenter[i] != center[i].grayScale) &#123;</span><br><span class="line">                        flag = <span class="keyword">false</span>;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (flag == <span class="keyword">true</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//重置之前的求和结果</span></span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">                    centerSum[i].r = <span class="number">0</span>;</span><br><span class="line">                    centerSum[i].g = <span class="number">0</span>;</span><br><span class="line">                    centerSum[i].b = <span class="number">0</span>;</span><br><span class="line">                    centerSum[i].grayScale = <span class="number">0</span>;</span><br><span class="line">                    centerSum[i].group = <span class="number">0</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//当k值不同时输出不同的误差平方和，然后使用肘部法则判断取哪个k值</span></span><br><span class="line">            <span class="keyword">double</span> SSE = <span class="number">0</span>;</span><br><span class="line">            SSE = computeSSE();</span><br><span class="line">            <span class="comment">//计算平均轮廓系数</span></span><br><span class="line">            <span class="keyword">double</span> avgSC = <span class="number">0</span>;</span><br><span class="line">            avgSC = computeAverageSilhouetteCoefficient();</span><br><span class="line">            <span class="comment">//输出不同k值对应的迭代次数、误差平方和、平均轮廓系数</span></span><br><span class="line">            System.out.println(<span class="string">"k = "</span> + k +</span><br><span class="line">                    <span class="string">", 迭代总次数："</span> + m +</span><br><span class="line">                    <span class="string">", 误差平方和（除以像素总数）："</span> + String.format(<span class="string">"%.2f"</span>, SSE / (width * height)) +</span><br><span class="line">                    <span class="string">", 平均轮廓系数："</span> + String.format(<span class="string">"%.2f"</span>, avgSC)</span><br><span class="line">            );</span><br><span class="line">            <span class="comment">//当k值不同时，输出不同k值对应的图片</span></span><br><span class="line">            ImagedataOut(outPath + k + <span class="string">".jpg"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算误差平方和（SSE）</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">computeSSE</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> SSE = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; width; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; height; j++) &#123;</span><br><span class="line">                <span class="keyword">double</span> dis = distance(source[i][j], center[source[i][j].group]);</span><br><span class="line">                SSE += dis * dis;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> SSE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 计算轮廓系数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">computeSilhouetteCoefficient</span><span class="params">(dataItem di, <span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//计算di这个点的ao值</span></span><br><span class="line">        <span class="keyword">double</span> ao = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//计算di这个点的bo值</span></span><br><span class="line">        <span class="keyword">double</span> bo = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">double</span>[] dis = <span class="keyword">new</span> <span class="keyword">double</span>[k];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; width; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; height; j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i != x &amp;&amp; i != y) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (source[i][j].group == di.group) &#123;</span><br><span class="line">                        ao += distance(di, source[i][j]);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (source[i][j].group != di.group) &#123;</span><br><span class="line">                        dis[source[i][j].group] += distance(di, source[i][j]);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        ao /= centerSum[di.group].group - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        for (int i = 0; i &lt; width; i++) &#123;</span></span><br><span class="line"><span class="comment">            for (int j = 0; j &lt; height; j++) &#123;</span></span><br><span class="line"><span class="comment">                    if (source[i][j].group != di.group) &#123;</span></span><br><span class="line"><span class="comment">                        dis[source[i][j].group] += distance(di, source[i][j]);</span></span><br><span class="line"><span class="comment">                    &#125;</span></span><br><span class="line"><span class="comment">            &#125;</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        bo = Double.MAX_VALUE;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (i != di.group) &#123;</span><br><span class="line">                dis[i] /= centerSum[i].group;</span><br><span class="line">                <span class="keyword">if</span> (bo &gt; dis[i]) &#123;</span><br><span class="line">                    bo = dis[i];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (bo - ao) / (Math.max(ao, bo));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//计算平均轮廓系数</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">double</span> <span class="title">computeAverageSilhouetteCoefficient</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; width; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; height; j++) &#123;</span><br><span class="line">                sum += computeSilhouetteCoefficient(source[i][j], i, j);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum /= (width * height);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="3">
+<li><p>Main.java</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bigData;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        String inPath = <span class="string">"images\\in.jpg"</span>;</span><br><span class="line">        ImageCluster ic = <span class="keyword">new</span> ImageCluster();</span><br><span class="line">        ic.kmeans(inPath, <span class="number">16</span>,<span class="number">200</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<p>参考链接：</p>
+<ol>
+<li><a href="https://blog.csdn.net/zhuzhuzhu22/article/details/53079114" target="_blank" rel="noopener">【Java】K-means算法Java实现以及图像分割（续）</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>RZIYang</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://rziyang.github.io/25e42248/" title="[Java]基于k-means算法的图像分割">https://rziyang.github.io/25e42248/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/图像分割/" rel="tag"><i class="fa fa-tag"></i> 图像分割</a>
+            
+              <a href="/tags/数据挖掘/" rel="tag"><i class="fa fa-tag"></i> 数据挖掘</a>
+            
+              <a href="/tags/k-means/" rel="tag"><i class="fa fa-tag"></i> k-means</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/6a1c6ea9/" rel="next" title="LeetCode Problem#6 题解">
+                  <i class="fa fa-chevron-left"></i> LeetCode Problem#6 题解
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="gitalk-container"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/head.jpeg"
+      alt="RZIYang">
+  <p class="site-author-name" itemprop="name">RZIYang</p>
+  <div class="site-description" itemprop="description">努力成为繁星中的一颗</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/RZIYang" title="GitHub &rarr; https://github.com/RZIYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:RZIYang2000@gmail.com" title="E-Mail &rarr; mailto:RZIYang2000@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">RZIYang</span>
+</div>
+
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("8/15/2019 01:23:45");
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "我已在此等待你 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+    
+  
+  <script color='255,51,51' opacity='0.5' zIndex='-1' count='50' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1.0.0/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'c28253557d9d83eb8268',
+      clientSecret: '64246c18c941f21891e95e302a72e22f1d5a4b45',
+      repo: 'gitalk',
+      owner: 'RZIYang',
+      admin: ['RZIYang'],
+      id: '7c4692efc7036304a22ec99a8b2bd73a',
+        language: 'zh-CN',
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
+
+</body>
+</html>
+
+<!-- 页面点击心形 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+
+<!--崩溃欺骗-->
+<script type="text/javascript" src="/js/crash_cheat.js"></script>
