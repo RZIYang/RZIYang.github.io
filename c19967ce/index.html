@@ -55,31 +55,30 @@
   };
 </script>
 
-  <meta name="description" content="一个总是摸鱼的咸鱼">
-<meta property="og:type" content="website">
-<meta property="og:title" content="RZIYang&#39;Blog">
-<meta property="og:url" content="https://rziyang.github.io/page/2/index.html">
+  <meta name="keywords" content="LeetCode,Two Pointers">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode Problem#15 题解">
+<meta property="og:url" content="https://rziyang.github.io/c19967ce/index.html">
 <meta property="og:site_name" content="RZIYang&#39;Blog">
-<meta property="og:description" content="一个总是摸鱼的咸鱼">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-03-08T09:22:24.091Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="RZIYang&#39;Blog">
-<meta name="twitter:description" content="一个总是摸鱼的咸鱼">
-  <link rel="canonical" href="https://rziyang.github.io/page/2/">
+<meta name="twitter:title" content="LeetCode Problem#15 题解">
+  <link rel="canonical" href="https://rziyang.github.io/c19967ce/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome: true,
-    isPost: false,
+    isHome: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>RZIYang'Blog</title>
+  <title>LeetCode Problem#15 题解 | RZIYang'Blog</title>
   
 
 
@@ -228,13 +227,14 @@
 
           <div id="content" class="content">
             
+
   <div id="posts" class="posts-expand">
-        <article itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/d877abb7/">
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/c19967ce/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="RZIYang">
@@ -246,9 +246,8 @@
       <meta itemprop="name" content="RZIYang'Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/d877abb7/" class="post-title-link" itemprop="url">01迷宫</a>
+        <h1 class="post-title" itemprop="name headline">LeetCode Problem#15 题解
+
           
         </h1>
 
@@ -263,7 +262,7 @@
                 
               
 
-              <time title="创建时间：2019-09-27 23:57:29" itemprop="dateCreated datePublished" datetime="2019-09-27T23:57:29+08:00">2019-09-27</time>
+              <time title="创建时间：2021-03-05 08:22:11" itemprop="dateCreated datePublished" datetime="2021-03-05T08:22:11+08:00">2021-03-05</time>
             </span>
           
             
@@ -274,7 +273,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-10 17:19:35" itemprop="dateModified" datetime="2020-08-10T17:19:35+08:00">2020-08-10</time>
+                <time title="修改时间：2021-03-08 17:22:24" itemprop="dateModified" datetime="2021-03-08T17:22:24+08:00">2021-03-08</time>
               </span>
             
           
@@ -303,248 +302,89 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p><strong>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/d877abb7/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
+        <p><strong><a id="more"></a></strong></p>
+<p><a href="https://leetcode.com/problems/3sum/" target="_blank" rel="noopener">题目传送</a></p>
+<p>题目概述：给出一个数组，在该数组中寻找若干组三个数字相加和为 0 的组合，且这三个数字不能全部相同。</p>
+<p>思路：由输出样例可以看出，结果是由小到大排序了的，且没有重复的组合。所以我一开始的思路是将数组进行排序。然后去重，将三个或以上的重复数字删减为两个。最后再通过固定一个数字，采用双指针法得出结果。最终由于花了太长时间没有将代码实现出来，我就看了 <code>Discuss</code> 里面别人的解题思路，发现别人没有去重的操作，而是通过在双指针法得出 <code>nums[i] + nums[left] + nums[right] == 0</code> 之后，判断 left 的右边的数字是否和 left 的数字相同来达到去重的效果， right 同理。</p>
+<p>代码实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; threeSum(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;nums)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 由于输出结果排好了序，所以需要进行排序</span></span><br><span class="line">        sort(nums.begin(), nums.end());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> vecSize = nums.size();</span><br><span class="line">        <span class="comment">// 接下来将一个值固定，然后对其它值使用双指针法判断</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vecSize - <span class="number">2</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 判断固定的数字是否重复，如果重复就直接跳过</span></span><br><span class="line">            <span class="keyword">if</span> (i != <span class="number">0</span> &amp;&amp; nums[i] == nums[i - <span class="number">1</span>])</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> left = i + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> right = vecSize - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (left &lt; right)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> sum = nums[i] + nums[left] + nums[right];</span><br><span class="line">                <span class="keyword">if</span> (sum == <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; t = &#123;nums[i], nums[left], nums[right]&#125;;</span><br><span class="line">                    res.push_back(t);</span><br><span class="line">                    <span class="comment">// 这里对 left 后面的数字进行去重</span></span><br><span class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[left] == nums[left + <span class="number">1</span>])</span><br><span class="line">                        left++;</span><br><span class="line">                    <span class="comment">// 这里对 right 前面的数字进行去重</span></span><br><span class="line">                    <span class="keyword">while</span> (left &lt; right &amp;&amp; nums[right] == nums[right - <span class="number">1</span>])</span><br><span class="line">                        right--;</span><br><span class="line">                    left++;</span><br><span class="line">                    right--;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (sum &lt; <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    left++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (sum &gt; <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    right--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
     
     
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>RZIYang</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://rziyang.github.io/c19967ce/" title="LeetCode Problem#15 题解">https://rziyang.github.io/c19967ce/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
       <footer class="post-footer">
-          <div class="post-eof"></div>
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/LeetCode/" rel="tag"><i class="fa fa-tag"></i> LeetCode</a>
+            
+              <a href="/tags/Two-Pointers/" rel="tag"><i class="fa fa-tag"></i> Two Pointers</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/25e42248/" rel="next" title="[Java]基于k-means算法的图像分割">
+                  <i class="fa fa-chevron-left"></i> [Java]基于k-means算法的图像分割
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/34be5b95/" rel="prev" title="LeetCode Problem#24 题解">
+                  LeetCode Problem#24 题解 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
         
       </footer>
+    
   </div>
   
   
   
   </article>
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/6b81fe2c/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="RZIYang">
-      <meta itemprop="description" content="一个总是摸鱼的咸鱼">
-      <meta itemprop="image" content="/images/head.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="RZIYang'Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/6b81fe2c/" class="post-title-link" itemprop="url">快速幂和矩阵的快速幂</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-21 18:04:15" itemprop="dateCreated datePublished" datetime="2019-09-21T18:04:15+08:00">2019-09-21</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-10 17:18:14" itemprop="dateModified" datetime="2020-08-10T17:18:14+08:00">2020-08-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/题解/" itemprop="url" rel="index"><span itemprop="name">题解</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/6b81fe2c/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
   </div>
-  
-  
-  
-  </article>
-
-    
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/21fcb834/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="RZIYang">
-      <meta itemprop="description" content="一个总是摸鱼的咸鱼">
-      <meta itemprop="image" content="/images/head.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="RZIYang'Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/21fcb834/" class="post-title-link" itemprop="url">To Fill or Not to Fill</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              
-                
-              
-
-              <time title="创建时间：2019-09-15 00:13:18" itemprop="dateCreated datePublished" datetime="2019-09-15T00:13:18+08:00">2019-09-15</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-10 17:13:30" itemprop="dateModified" datetime="2020-08-10T17:13:30+08:00">2020-08-10</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/题解/" itemprop="url" rel="index"><span itemprop="name">题解</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/21fcb834/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
-  </div>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-  </nav>
 
 
           </div>
           
+    
+    <div class="comments" id="gitalk-container"></div>
+  
 
         </div>
           
@@ -559,6 +399,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -749,6 +594,24 @@ setInterval("createtime()",250);
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'c28253557d9d83eb8268',
+      clientSecret: '64246c18c941f21891e95e302a72e22f1d5a4b45',
+      repo: 'gitalk',
+      owner: 'RZIYang',
+      admin: ['RZIYang'],
+      id: '52bfa4a51905c5c8c6c4b9d9101af59e',
+        language: 'zh-CN',
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
 
 </body>
 </html>
