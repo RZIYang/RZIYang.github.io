@@ -57,14 +57,14 @@
 
   <meta name="keywords" content="LeetCode">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode Problem#5 题解">
-<meta property="og:url" content="https://rziyang.github.io/e493694a/index.html">
+<meta property="og:title" content="LeetCode Problem#25 题解">
+<meta property="og:url" content="https://rziyang.github.io/f8145b0b/index.html">
 <meta property="og:site_name" content="RZIYang&#39;Blog">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-28T14:42:49.226Z">
+<meta property="og:updated_time" content="2021-03-10T09:40:34.402Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode Problem#5 题解">
-  <link rel="canonical" href="https://rziyang.github.io/e493694a/">
+<meta name="twitter:title" content="LeetCode Problem#25 题解">
+  <link rel="canonical" href="https://rziyang.github.io/f8145b0b/">
 
 
 <script id="page-configurations">
@@ -78,7 +78,7 @@
   };
 </script>
 
-  <title>LeetCode Problem#5 题解 | RZIYang'Blog</title>
+  <title>LeetCode Problem#25 题解 | RZIYang'Blog</title>
   
 
 
@@ -234,7 +234,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/e493694a/">
+    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/f8145b0b/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="RZIYang">
@@ -246,7 +246,7 @@
       <meta itemprop="name" content="RZIYang'Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">LeetCode Problem#5 题解
+        <h1 class="post-title" itemprop="name headline">LeetCode Problem#25 题解
 
           
         </h1>
@@ -262,7 +262,7 @@
                 
               
 
-              <time title="创建时间：2020-11-28 21:10:50 / 修改时间：22:42:49" itemprop="dateCreated datePublished" datetime="2020-11-28T21:10:50+08:00">2020-11-28</time>
+              <time title="创建时间：2021-03-10 11:10:08 / 修改时间：17:40:34" itemprop="dateCreated datePublished" datetime="2021-03-10T11:10:08+08:00">2021-03-10</time>
             </span>
           
             
@@ -295,14 +295,17 @@
 
       
         <p><strong><a id="more"></a></strong></p>
-<p><a href="https://leetcode.com/problems/longest-palindromic-substring" target="_blank" rel="noopener">题目传送</a></p>
-<p>题意：给出字符串 s ，返回最长回文子串。1 &lt;= s.length &lt;= 1000</p>
-<p>思路一（TLE）：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">longestPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = s.length();</span><br><span class="line">        <span class="built_in">string</span> res = <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">int</span> maxLen = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">1</span>; i + j &lt;= len; j++) &#123;</span><br><span class="line">                <span class="built_in">string</span> str = s.substr(i, j);</span><br><span class="line">                <span class="built_in">string</span> pstr = str;</span><br><span class="line">                reverse(pstr.begin(), pstr.end());</span><br><span class="line">                <span class="keyword">if</span>(pstr.compare(str) == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(j &gt; maxLen) &#123;</span><br><span class="line">                        res = str;</span><br><span class="line">                        maxLen = j;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><a href="https://leetcode.com/problems/reverse-nodes-in-k-group/" target="_blank" rel="noopener">题目传送门</a></p>
+<p>题意：给定一个链表和一个整数 k ，让链表每隔 k 个节点就反转一次，如果剩下的节点个数不足 k 个，就不进行反转，将反转后的链表首部返回。</p>
+<p>思路：这题和之前的反转相邻两个节点的区别就是，这题的反转的节点的个数是不确定的。这里因为反转之后的节点有可能无法通过链表的 next 访问到或者通过 next 访问的步骤太复杂了，所以我想法是用一个 ListNode 指针数组来存储链表的所有节点，然后再进行访问并反转就比较简单了。假设某链表有 n 组 k 个节点，这里将这 n 组节点分为两部分来考虑，第一部分是前 n - 1 组节点，第二部分是第 n 组节点，前面的 n - 1 组节点都是同样的思路。</p>
+<p>这里用 head = [1, 2, 3, 4, 5, 6, 7, 8]   k = 3 来举例，对于前面 n - 1 组，即 head[1] 、 head[2] 和 head[3] （这里用 head[n] 代表链表的第 n 个节点），我的思路如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">head[<span class="number">1</span>]-&gt;next = head[<span class="number">6</span>];	<span class="comment">// 这里将 head[1] 和下一组反转后的第一个节点（即 head[6]）连接起来</span></span><br><span class="line">head[<span class="number">2</span>]-&gt;next = head[<span class="number">1</span>];	<span class="comment">// 接下来就是将剩下的节点与它的前一个节点连接起来就够了</span></span><br><span class="line">head[<span class="number">3</span>]-&gt;next = head[<span class="number">2</span>];</span><br></pre></td></tr></table></figure>
 
-<p>两层循环，遍历所有子串，然后判断该字串是否是回文字符串。不出意外地 TLE 了。然后想半天想不到思路，看了 Solution （<a href="https://leetcode.com/problems/longest-palindromic-substring/solution/" target="_blank" rel="noopener">链接</a>），然后我选择的是第4个方法。从第一个遍历到最后一个字符，让每个字符当作回文的中心字符，然后得到最长的回文字串。</p>
-<p>思路二（AC 代码）：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">longestPalindrome</span><span class="params">(<span class="built_in">string</span> s)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> lenS = s.length();		<span class="comment">// 记录字符串的长度，便于直接使用，而不是用一次调用一次length方法</span></span><br><span class="line">        <span class="keyword">int</span> start = <span class="number">-1</span>, length = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lenS; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> oddLen = lenOfPalindrome(s, i, i);		<span class="comment">// 假设回文子串为奇数长度</span></span><br><span class="line">            <span class="keyword">int</span> evenLen = lenOfPalindrome(s, i, i + <span class="number">1</span>);	<span class="comment">// 假设回文子串为偶数长度</span></span><br><span class="line">            <span class="keyword">if</span>(length &lt; oddLen) &#123;		<span class="comment">// 记录最长长度时的开始字符和长度</span></span><br><span class="line">                start = i - oddLen / <span class="number">2</span>;</span><br><span class="line">                length = oddLen;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(length &lt; evenLen) &#123;		<span class="comment">// 同上</span></span><br><span class="line">                start = i - evenLen / <span class="number">2</span> + <span class="number">1</span>;</span><br><span class="line">                length = evenLen;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.substr(start, length);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lenOfPalindrome</span><span class="params">(<span class="built_in">string</span> str, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span>	<span class="comment">// 对str字符串从left向左遍历，从right向右遍历</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> lenStr = str.length();</span><br><span class="line">        <span class="keyword">while</span>(left &gt;= <span class="number">0</span> &amp;&amp; right &lt; lenStr &amp;&amp; str[left] == str[right]) &#123;</span><br><span class="line">            left--;</span><br><span class="line">            right++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> right - left - <span class="number">1</span>;	<span class="comment">// 返回长度</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>对于第 n 组，即 head[4] 、 head[5] 和 head[6] ，则基本上相同，只有第一个节点不同：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">head[<span class="number">4</span>]-&gt;next = head[<span class="number">7</span>];	<span class="comment">// 这里由于后面剩下的节点不足 3 个，所以剩下的节点不需要进行反转，需要注意的是：如果剩下的节点数正好为 0，那么就需要特判，将 head[4] 的 next 设置为 nullptr,不然可能会数组访问越界造成 Runtime Error</span></span><br><span class="line">head[<span class="number">5</span>]-&gt;next = head[<span class="number">4</span>];</span><br><span class="line">head[<span class="number">6</span>]-&gt;next = head[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
+
+<p>代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode() : val(0), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode *<span class="title">reverseKGroup</span><span class="params">(ListNode *head, <span class="keyword">int</span> k)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ListNode *arr[<span class="number">5001</span>];</span><br><span class="line">        <span class="keyword">int</span> arrSize = <span class="number">0</span>;</span><br><span class="line">        ListNode *p = head;</span><br><span class="line">        <span class="keyword">while</span> (p != <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            arr[arrSize] = p;</span><br><span class="line">            arrSize++;</span><br><span class="line">            p = p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        ListNode *res = <span class="literal">nullptr</span>;</span><br><span class="line">        res = arr[k - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (arrSize / k) * k; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (i % k == <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (i / k != arrSize / k - <span class="number">1</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    arr[i]-&gt;next = arr[i + <span class="number">2</span> * k - <span class="number">1</span>];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="keyword">if</span> (i + k &lt; arrSize)</span><br><span class="line">                    &#123;</span><br><span class="line">                        arr[i]-&gt;next = arr[i + k];</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        arr[i]-&gt;next = <span class="literal">nullptr</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                arr[i]-&gt;next = arr[i - <span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -320,7 +323,7 @@
     <strong>本文作者： </strong>RZIYang</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://rziyang.github.io/e493694a/" title="LeetCode Problem#5 题解">https://rziyang.github.io/e493694a/</a>
+    <a href="https://rziyang.github.io/f8145b0b/" title="LeetCode Problem#25 题解">https://rziyang.github.io/f8145b0b/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -345,8 +348,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/892ce412/" rel="next" title="LeetCode Problem#3 解题思路">
-                  <i class="fa fa-chevron-left"></i> LeetCode Problem#3 解题思路
+                <a href="/34be5b95/" rel="next" title="LeetCode Problem#24 题解">
+                  <i class="fa fa-chevron-left"></i> LeetCode Problem#24 题解
                 </a>
               
             </div>
@@ -354,10 +357,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/6a1c6ea9/" rel="prev" title="LeetCode Problem#6 题解">
-                  LeetCode Problem#6 题解 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -597,7 +596,7 @@ setInterval("createtime()",250);
       repo: 'gitalk',
       owner: 'RZIYang',
       admin: ['RZIYang'],
-      id: '1a4913c00f98e7cf77ec760f5f4b71db',
+      id: 'a39c9e7adc97f2b800f87dd7a4e49790',
         language: 'zh-CN',
       
       distractionFreeMode: 'true'

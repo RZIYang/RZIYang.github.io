@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[LeetCode Problem#25 题解]]></title>
+    <url>%2Ff8145b0b%2F</url>
+    <content type="text"><![CDATA[题目传送门 题意：给定一个链表和一个整数 k ，让链表每隔 k 个节点就反转一次，如果剩下的节点个数不足 k 个，就不进行反转，将反转后的链表首部返回。 思路：这题和之前的反转相邻两个节点的区别就是，这题的反转的节点的个数是不确定的。这里因为反转之后的节点有可能无法通过链表的 next 访问到或者通过 next 访问的步骤太复杂了，所以我想法是用一个 ListNode 指针数组来存储链表的所有节点，然后再进行访问并反转就比较简单了。假设某链表有 n 组 k 个节点，这里将这 n 组节点分为两部分来考虑，第一部分是前 n - 1 组节点，第二部分是第 n 组节点，前面的 n - 1 组节点都是同样的思路。 这里用 head = [1, 2, 3, 4, 5, 6, 7, 8] k = 3 来举例，对于前面 n - 1 组，即 head[1] 、 head[2] 和 head[3] （这里用 head[n] 代表链表的第 n 个节点），我的思路如下： 123head[1]-&gt;next = head[6]; // 这里将 head[1] 和下一组反转后的第一个节点（即 head[6]）连接起来head[2]-&gt;next = head[1]; // 接下来就是将剩下的节点与它的前一个节点连接起来就够了head[3]-&gt;next = head[2]; 对于第 n 组，即 head[4] 、 head[5] 和 head[6] ，则基本上相同，只有第一个节点不同： 123head[4]-&gt;next = head[7]; // 这里由于后面剩下的节点不足 3 个，所以剩下的节点不需要进行反转，需要注意的是：如果剩下的节点数正好为 0，那么就需要特判，将 head[4] 的 next 设置为 nullptr,不然可能会数组访问越界造成 Runtime Errorhead[5]-&gt;next = head[4];head[6]-&gt;next = head[5]; 代码： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode() : val(0), next(nullptr) &#123;&#125; * ListNode(int x) : val(x), next(nullptr) &#123;&#125; * ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125; * &#125;; */class Solution&#123;public: ListNode *reverseKGroup(ListNode *head, int k) &#123; ListNode *arr[5001]; int arrSize = 0; ListNode *p = head; while (p != nullptr) &#123; arr[arrSize] = p; arrSize++; p = p-&gt;next; &#125; ListNode *res = nullptr; res = arr[k - 1]; for (int i = 0; i &lt; (arrSize / k) * k; i++) &#123; if (i % k == 0) &#123; if (i / k != arrSize / k - 1) &#123; arr[i]-&gt;next = arr[i + 2 * k - 1]; &#125; else &#123; if (i + k &lt; arrSize) &#123; arr[i]-&gt;next = arr[i + k]; &#125; else &#123; arr[i]-&gt;next = nullptr; &#125; &#125; &#125; else &#123; arr[i]-&gt;next = arr[i - 1]; &#125; &#125; return res; &#125;&#125;;]]></content>
+      <categories>
+        <category>题解</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LeetCode Problem#24 题解]]></title>
     <url>%2F34be5b95%2F</url>
     <content type="text"><![CDATA[题目传送门 题意：给定一个链表，交换链表中相邻的两个节点，返回头节点。 思路：有两种方法，一种是将相邻两个节点的值交换。一种是不修改值，仅修改节点的 next 值。显然，第一种较为简单，第二种较难。这里我用的是第二种。首先，将链表分为两部分进行处理，一部分是头部的两个节点，另一部分是链表的其他节点。这里为了表述方便，我用 head[1] 代表链表的头节点， head[2] 代表第二个节点，以此类推， head[n] 代表第 n 个节点。 对头部两个节点的处理，就是直接经过以下处理就可以了： 1234ListNode* tmp = head[2];head[1]-&gt;next = head[1]-&gt;next-&gt;next;tmp-&gt;next = head[1]; // 这里由于 head[1] 的 next 变了，无法直接访问到 head[2] ，需要提前将 head[2] 存到一个临时指针变量中res = tmp; // res 为新的头节点，用于将结果返回 对于其他部分的节点，这里为了方便，我用 head[3] 和 head[4] 的交换来进行举例。 12345ListNode* p = head[2]; // 这里将 head[2] 存起来是为了通过 head[2] 来访问 head[3] 和 head[4]，之所以不直接用 head[3]，是因为如果用 head[3] 就无法将交换之后的 head[4] 和之前的 head[2] 连接起来ListNode* tmp = head[4]; // 将 head[5] 存储起来，原因类似于上面的 head[2]p-&gt;next-&gt;next = p-&gt;next-&gt;next-&gt;next; // 等同于 head[3]-&gt;next = head[5]tmp-&gt;next = p-&gt;next; // 等同于 head[4]-&gt;next = head[3]p-&gt;next = tmp; //等同于 head[2]-&gt;next = head[4] 上面就是大致的思路了。接下来是 AC 的代码： 123456789101112131415161718192021222324252627282930313233343536373839/** * Definition for singly-linked list. * struct ListNode &#123; * int val; * ListNode *next; * ListNode() : val(0), next(nullptr) &#123;&#125; * ListNode(int x) : val(x), next(nullptr) &#123;&#125; * ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125; * &#125;; */class Solution&#123;public: ListNode *swapPairs(ListNode *head) &#123; ListNode *res = nullptr; if (head != nullptr) &#123; res = head; if (head-&gt;next != nullptr) &#123; ListNode *t = head-&gt;next; head-&gt;next = head-&gt;next-&gt;next; t-&gt;next = head; res = t; head = t-&gt;next; &#125; &#125; while (head != nullptr &amp;&amp; head-&gt;next != nullptr &amp;&amp; head-&gt;next-&gt;next != nullptr) &#123; ListNode *t = head-&gt;next-&gt;next; head-&gt;next-&gt;next = head-&gt;next-&gt;next-&gt;next; t-&gt;next = head-&gt;next; head-&gt;next = t; head = t-&gt;next; &#125; return res; &#125;&#125;;]]></content>
@@ -132,8 +143,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>快速幂</tag>
         <tag>模板</tag>
+        <tag>快速幂</tag>
       </tags>
   </entry>
   <entry>
