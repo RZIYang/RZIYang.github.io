@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Monda:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="keywords" content="Java,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部署JavaWeb项目">
+<meta property="og:url" content="https://rziyang.github.io/712256f5/index.html">
+<meta property="og:site_name" content="RZIYang&#39;s Blog">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/DcG4HE63xf72Muk.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/cW7EUfXptgw1FIG.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/uYKoi2n9lkSeDbd.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/3BGWtdc7nai6I4D.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/dBMc9v8WtIi7Qy6.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/YxFb7BhpURwyLMf.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/Ai8GhKIPvQSrLf7.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/4gdWpb1rZPoQi8n.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/NAkrKuCBj7xLGdT.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/OCKTA1jS8LPbHyM.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/sRyMwqJ8Iri97BH.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/Ui4m13QAeHEDOTo.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/oF7QSrsRWEw5nTq.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/Wk8BVI5KQovNUX6.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/zeypodhQ8ug4Hf6.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/ODCMiu9ebQmYkPr.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/KXof2F6Yc1BDgqQ.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/SGkDKvXpce5xEoN.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/OtN96MsfamHQ1Gg.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/ARsYcyxdpqEZGiM.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/QzV5LiBZDw6WIaA.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/Gd23AZeJBmiLtXl.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/seUJgq8Nytv7MpC.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/pT6w9WlhUfg5Yn3.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/HP8tMOUSvXNlcqh.png">
+<meta property="og:updated_time" content="2021-07-10T00:58:55.196Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="部署JavaWeb项目">
+<meta name="twitter:image" content="https://i.loli.net/2021/07/10/DcG4HE63xf72Muk.png">
+  <link rel="canonical" href="https://rziyang.github.io/712256f5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>部署JavaWeb项目 | RZIYang's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">RZIYang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://rziyang.github.io/712256f5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="RZIYang">
+      <meta itemprop="description" content="一个总是摸鱼的咸鱼">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RZIYang's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">部署JavaWeb项目
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2021-07-10 08:30:26 / 修改时间：08:58:55" itemprop="dateCreated datePublished" datetime="2021-07-10T08:30:26+08:00">2021-07-10</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong><a id="more"></a></strong></p>
+<blockquote>
+<p>Author：RZIYang    2021年7月9日</p>
+</blockquote>
+<h1 id="项目名称"><a href="#项目名称" class="headerlink" title="项目名称"></a>项目名称</h1><p>《学生选课管理系统（StudentExaminationSystem）》（说实话不知道为什么取这个英文）</p>
+<h1 id="部署环境"><a href="#部署环境" class="headerlink" title="部署环境"></a>部署环境</h1><ul>
+<li><code>JDK 8</code>(1.8.291)</li>
+<li><code>MySQL 8.0.25</code>  </li>
+<li><code>Tomcat 9.0.48</code></li>
+</ul>
+<h1 id="需要上传到-Linux-上的文件"><a href="#需要上传到-Linux-上的文件" class="headerlink" title="需要上传到 Linux 上的文件"></a>需要上传到 Linux 上的文件</h1><p><img src="https://i.loli.net/2021/07/10/DcG4HE63xf72Muk.png" alt="image-20210709230401013"></p>
+<h1 id="项目部署流程"><a href="#项目部署流程" class="headerlink" title="项目部署流程"></a>项目部署流程</h1><h2 id="打包项目为-war-包格式"><a href="#打包项目为-war-包格式" class="headerlink" title="打包项目为 war 包格式"></a>打包项目为 war 包格式</h2><ol>
+<li>首先修改数据库的密码（因为 Linux 上设置的 MySQL 的密码和本地开发环境不一样）为：<code>Qf..2021</code></li>
+<li>在 <code>Project Structure</code> 里面，选择 <code>Artifacts</code> ，点击 <code>&#39;+&#39;</code> ，并选择 <code>Web Application: Archive</code>。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/cW7EUfXptgw1FIG.png" alt="image-20210709224400672"></p>
+<ol start="3">
+<li>在右上角 <code>Tomcat 9.0.48</code> 的位置，打开下拉框，点击 <code>Edit Configurations...</code> ，然后再点击 <code>Deployment</code> ，点击 <code>‘+’</code> ，选择 <code>Artifact</code> ，然后点击 <code>OK</code> 。运行之后，在 <code>target</code> 文件夹里面就有 war 包了。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/uYKoi2n9lkSeDbd.png" alt="image-20210709224852118"></p>
+<p><img src="https://i.loli.net/2021/07/10/3BGWtdc7nai6I4D.png" alt="image-20210709224931566"></p>
+<h2 id="安装-JDK"><a href="#安装-JDK" class="headerlink" title="安装 JDK"></a>安装 JDK</h2><ol>
+<li>下载 rpm 文件，然后上传到虚拟机中。</li>
+<li>输入命令：<code>rpm -ivh jdk-8u291-linux-x64.rpm</code> </li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/dBMc9v8WtIi7Qy6.png" alt="image-20210709142300113"></p>
+<ol start="3">
+<li>配置环境变量，输入 <code>vi /etc/profile</code> ，添加以下行，然后输入 <code>source /etc/profile</code></li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/YxFb7BhpURwyLMf.png" alt="image-20210709225451987"></p>
+<ol start="4">
+<li>安装完之后，输入 <code>java -version</code> 命令和 <code>javac -version</code> 命令检测安装是否完成。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/Ai8GhKIPvQSrLf7.png" alt="image-20210709142449645"></p>
+<ol start="5">
+<li>出现以上内容即为 JDK 安装完成。</li>
+</ol>
+<h2 id="安装-MySQL-服务"><a href="#安装-MySQL-服务" class="headerlink" title="安装 MySQL 服务"></a>安装 MySQL 服务</h2><ol>
+<li>下载 MySQL 8.0 的 rpm 文件并上传到 Linux 上。</li>
+<li>输入命令：<code>rpm -ivh mysql80-community-release-el7-3.noarch.rpm</code> </li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/4gdWpb1rZPoQi8n.png" alt="image-20210709143119408"></p>
+<ol start="3">
+<li>输入命令：<code>ls /etc/yum.repos.d/</code> 检测是否成功下载源配置文件。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/NAkrKuCBj7xLGdT.png" alt="image-20210709143352049"></p>
+<ol start="4">
+<li>输入命令： <code>vi /etc/yum.repos.d/mysql-community.repo</code> 修改源配置文件，检查 <code>[mysql80-community]</code> 标签后的 <code>enabled</code> 值是不是<code>1</code>，若不是，则修改为<code>1</code>。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/OCKTA1jS8LPbHyM.png" alt="image-20210709143629018"></p>
+<p><img src="https://i.loli.net/2021/07/10/sRyMwqJ8Iri97BH.png" alt="image-20210709143644335"></p>
+<ol start="5">
+<li>输入命令：<code>yum repolist</code> 检测 yum 仓库列表是否有 <code>mysql80-community</code> 。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/Ui4m13QAeHEDOTo.png" alt="image-20210709144146615"></p>
+<ol start="6">
+<li>然后安装 MySQL ，输入命令： <code>yum install mysql-community-server -y</code> ，等待安装完成。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/oF7QSrsRWEw5nTq.png" alt="image-20210709153808350"></p>
+<ol start="7">
+<li><p>然后输入命令，启动 <code>mysqld</code> 服务：<code>systemctl start mysqld</code></p>
+</li>
+<li><p>通过 grep 命令获取初始密码：<code>grep password /var/log/mysqld.log</code></p>
+</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/Wk8BVI5KQovNUX6.png" alt="image-20210709154054502"></p>
+<ol start="9">
+<li>然后通过以下命令修改密码：<code>mysqladmin -uroot -p&#39;Ee;5NujWkp4g&#39; password &#39;Qf..2021&#39;</code> </li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/zeypodhQ8ug4Hf6.png" alt="image-20210709154236761"></p>
+<ol start="10">
+<li>测试是否安装完成，输入命令 <code>mysql -uroot -p&#39;Qf..2021&#39;</code> 登录进入 MySQL。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/ODCMiu9ebQmYkPr.png" alt="image-20210709154446081"></p>
+<h2 id="创建数据库，并导入-SQL-数据"><a href="#创建数据库，并导入-SQL-数据" class="headerlink" title="创建数据库，并导入 SQL 数据"></a>创建数据库，并导入 SQL 数据</h2><ol>
+<li>登录 MySQL ，使用 <code>source Examination_System.sql;</code> 命令导入数据库</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/KXof2F6Yc1BDgqQ.png" alt="image-20210709155027963"></p>
+<ol start="2">
+<li>使用 <code>show databases;</code> 和 <code>show tables;</code> 命令检测是否导入成功。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/SGkDKvXpce5xEoN.png" alt="image-20210709155407359"></p>
+<h2 id="安装-Tomcat"><a href="#安装-Tomcat" class="headerlink" title="安装 Tomcat"></a>安装 Tomcat</h2><ol>
+<li><p>将 Tomcat 的 tar.gz 压缩包解压到 <code>/usr/local</code> 文件夹内，输入的命令是：<code>tar -xf apache-tomcat-9.0.48.tar.gz -C /usr/local</code> </p>
+</li>
+<li><p>使用 mv 命令将文件夹重命名：<code>mv apache-tomcat-9.0.48/ tomcat/</code></p>
+</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/OtN96MsfamHQ1Gg.png" alt="image-20210709160159288"></p>
+<ol start="3">
+<li>修改环境变量：<code>vi /etc/profile</code>  ，然后添加以下几行：</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/ARsYcyxdpqEZGiM.png" alt="image-20210709160521056"></p>
+<ol start="4">
+<li><p>输入 <code>source /etc/profile</code> 命令，让添加的代码起作用。</p>
+</li>
+<li><p>启动 Tomcat ，输入命令： <code>/usr/local/tomcat/bin/startup.sh</code> </p>
+</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/QzV5LiBZDw6WIaA.png" alt="image-20210709225349732"></p>
+<ol start="6">
+<li>在浏览器访问 <a href="http://192.168.56.129:8080" target="_blank" rel="noopener">http://192.168.56.129:8080</a> 测试 Tomcat 是否成功启动（先使用 <code>systemctl stop firewalld</code> 命令关闭防火墙）。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/Gd23AZeJBmiLtXl.png" alt="image-20210709161604395"></p>
+<h2 id="将项目的-war-包部署到-Tomcat-上"><a href="#将项目的-war-包部署到-Tomcat-上" class="headerlink" title="将项目的 war 包部署到 Tomcat 上"></a>将项目的 war 包部署到 Tomcat 上</h2><ol>
+<li><p>将 war 包放到 Tomcat 根目录的 <code>webapps</code> 文件夹内，使用命令：<code>mv Examination_System.war /usr/local/tomcat/webapps</code></p>
+</li>
+<li><p>修改 Tomcat 根目录下，<code>conf</code> 文件夹内的 <code>server.xml</code> 文件，使用命令：<code>vi /usr/local/tomcat/conf/server.xml</code> ，然后再在 <code>&lt;Host&gt;</code> 标签内添加以下内容： <code>&lt;Context path=&quot;&quot; docBase=&quot;Examination_System&quot; debug=&quot;0&quot; reloadable=&quot;true&quot;&gt;&lt;/Context&gt;</code></p>
+</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/seUJgq8Nytv7MpC.png" alt="image-20210709225133833"></p>
+<ol start="3">
+<li>使用命令：<code>/usr/local/tomcat/bin/shutdown.sh</code> 关闭 Tomcat 然后再启动 Tomcat ，再访问网址：<a href="http://192.168.56.129:8080" target="_blank" rel="noopener">http://192.168.56.129:8080</a> 测试项目是否部署成功。</li>
+</ol>
+<p><img src="https://i.loli.net/2021/07/10/pT6w9WlhUfg5Yn3.png" alt="image-20210709225326237"></p>
+<p><img src="https://i.loli.net/2021/07/10/HP8tMOUSvXNlcqh.png" alt="image-20210709225821558"></p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>RZIYang</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://rziyang.github.io/712256f5/" title="部署JavaWeb项目">https://rziyang.github.io/712256f5/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+            
+              <a href="/tags/Linux/" rel="tag"><i class="fa fa-tag"></i> Linux</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/61e048ab/" rel="next" title="LeetCode Problem#36 题解">
+                  <i class="fa fa-chevron-left"></i> LeetCode Problem#36 题解
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="gitalk-container"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#项目名称"><span class="nav-text">项目名称</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#部署环境"><span class="nav-text">部署环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#需要上传到-Linux-上的文件"><span class="nav-text">需要上传到 Linux 上的文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目部署流程"><span class="nav-text">项目部署流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#打包项目为-war-包格式"><span class="nav-text">打包项目为 war 包格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-JDK"><span class="nav-text">安装 JDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-MySQL-服务"><span class="nav-text">安装 MySQL 服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建数据库，并导入-SQL-数据"><span class="nav-text">创建数据库，并导入 SQL 数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Tomcat"><span class="nav-text">安装 Tomcat</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将项目的-war-包部署到-Tomcat-上"><span class="nav-text">将项目的 war 包部署到 Tomcat 上</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avatar.jpg"
+      alt="RZIYang">
+  <p class="site-author-name" itemprop="name">RZIYang</p>
+  <div class="site-description" itemprop="description">一个总是摸鱼的咸鱼</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/RZIYang" title="GitHub &rarr; https://github.com/RZIYang" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:RZIYang2000@gmail.com" title="E-Mail &rarr; mailto:RZIYang2000@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2019 – <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">RZIYang</span>
+</div>
+
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("8/15/2019 01:23:45");
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "本博客已运行 "+dnum+" 天 ";
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒";
+    }
+setInterval("createtime()",250);
+</script>
+</div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+    
+  
+  <script color='255,51,51' opacity='0.5' zIndex='-1' count='50' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1.0.0/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/pisces.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.4.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'c28253557d9d83eb8268',
+      clientSecret: '64246c18c941f21891e95e302a72e22f1d5a4b45',
+      repo: 'gitalk',
+      owner: 'RZIYang',
+      admin: ['RZIYang'],
+      id: 'c0c225f4a62cce4c45b2d1f0e307ce86',
+        language: 'zh-CN',
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
+
+</body>
+</html>
+
+<!-- 页面点击心形 -->
+<script type="text/javascript" src="/js/clicklove.js"></script>
+
+<!--崩溃欺骗-->
+<script type="text/javascript" src="/js/crash_cheat.js"></script>

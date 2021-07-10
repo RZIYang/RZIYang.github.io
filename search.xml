@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[部署JavaWeb项目]]></title>
+    <url>%2F712256f5%2F</url>
+    <content type="text"><![CDATA[Author：RZIYang 2021年7月9日 项目名称《学生选课管理系统（StudentExaminationSystem）》（说实话不知道为什么取这个英文） 部署环境 JDK 8(1.8.291) MySQL 8.0.25 Tomcat 9.0.48 需要上传到 Linux 上的文件 项目部署流程打包项目为 war 包格式 首先修改数据库的密码（因为 Linux 上设置的 MySQL 的密码和本地开发环境不一样）为：Qf..2021 在 Project Structure 里面，选择 Artifacts ，点击 &#39;+&#39; ，并选择 Web Application: Archive。 在右上角 Tomcat 9.0.48 的位置，打开下拉框，点击 Edit Configurations... ，然后再点击 Deployment ，点击 ‘+’ ，选择 Artifact ，然后点击 OK 。运行之后，在 target 文件夹里面就有 war 包了。 安装 JDK 下载 rpm 文件，然后上传到虚拟机中。 输入命令：rpm -ivh jdk-8u291-linux-x64.rpm 配置环境变量，输入 vi /etc/profile ，添加以下行，然后输入 source /etc/profile 安装完之后，输入 java -version 命令和 javac -version 命令检测安装是否完成。 出现以上内容即为 JDK 安装完成。 安装 MySQL 服务 下载 MySQL 8.0 的 rpm 文件并上传到 Linux 上。 输入命令：rpm -ivh mysql80-community-release-el7-3.noarch.rpm 输入命令：ls /etc/yum.repos.d/ 检测是否成功下载源配置文件。 输入命令： vi /etc/yum.repos.d/mysql-community.repo 修改源配置文件，检查 [mysql80-community] 标签后的 enabled 值是不是1，若不是，则修改为1。 输入命令：yum repolist 检测 yum 仓库列表是否有 mysql80-community 。 然后安装 MySQL ，输入命令： yum install mysql-community-server -y ，等待安装完成。 然后输入命令，启动 mysqld 服务：systemctl start mysqld 通过 grep 命令获取初始密码：grep password /var/log/mysqld.log 然后通过以下命令修改密码：mysqladmin -uroot -p&#39;Ee;5NujWkp4g&#39; password &#39;Qf..2021&#39; 测试是否安装完成，输入命令 mysql -uroot -p&#39;Qf..2021&#39; 登录进入 MySQL。 创建数据库，并导入 SQL 数据 登录 MySQL ，使用 source Examination_System.sql; 命令导入数据库 使用 show databases; 和 show tables; 命令检测是否导入成功。 安装 Tomcat 将 Tomcat 的 tar.gz 压缩包解压到 /usr/local 文件夹内，输入的命令是：tar -xf apache-tomcat-9.0.48.tar.gz -C /usr/local 使用 mv 命令将文件夹重命名：mv apache-tomcat-9.0.48/ tomcat/ 修改环境变量：vi /etc/profile ，然后添加以下几行： 输入 source /etc/profile 命令，让添加的代码起作用。 启动 Tomcat ，输入命令： /usr/local/tomcat/bin/startup.sh 在浏览器访问 http://192.168.56.129:8080 测试 Tomcat 是否成功启动（先使用 systemctl stop firewalld 命令关闭防火墙）。 将项目的 war 包部署到 Tomcat 上 将 war 包放到 Tomcat 根目录的 webapps 文件夹内，使用命令：mv Examination_System.war /usr/local/tomcat/webapps 修改 Tomcat 根目录下，conf 文件夹内的 server.xml 文件，使用命令：vi /usr/local/tomcat/conf/server.xml ，然后再在 &lt;Host&gt; 标签内添加以下内容： &lt;Context path=&quot;&quot; docBase=&quot;Examination_System&quot; debug=&quot;0&quot; reloadable=&quot;true&quot;&gt;&lt;/Context&gt; 使用命令：/usr/local/tomcat/bin/shutdown.sh 关闭 Tomcat 然后再启动 Tomcat ，再访问网址：http://192.168.56.129:8080 测试项目是否部署成功。]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[LeetCode Problem#36 题解]]></title>
     <url>%2F61e048ab%2F</url>
     <content type="text"><![CDATA[题目传送门 题意：就是类似于数独游戏，给你一个 9x9 的数组，数组元素由数字 1-9 和句号 . 组成，判断给你的数组是否满足要求（1. 每一行给出的数字不能重复。2. 每一列给出的数字不能重复。3. 9 个 3x3 的格子里面给出的数字不能重复。），然后给出 true 或 false 。 先给出我的 AC 代码，然后再将思路。 12345678910111213141516171819202122232425262728293031class Solution&#123;public: bool isValidSudoku(vector&lt;vector&lt;char&gt;&gt; &amp;board) &#123; int a[9], b[9], c[3][3]; // 分别代表行、列和 3*3 的格子 for (int i = 0; i &lt; 9; i++) &#123; a[i] = b[i] = c[i / 3][i % 3] = 0x01ff; // 初始化为 0000 0001 1111 1111B，最右边9位为1代表该数字没有出现过，0代表出现过 &#125; for (int i = 0; i &lt; 9; i++) &#123; for (int j = 0; j &lt; 9; j++) &#123; if (board[i][j] == '.') // 如果该字符是句号就跳过 continue; int num = board[i][j] - '0'; // 字符转换为数字 num = 1 &lt;&lt; (num - 1); // 进行左移操作 if ((a[i] &amp; num) &amp;&amp; (b[j] &amp; num) &amp;&amp; (c[i / 3][j / 3] &amp; num)) // 这里的 与 操作用于判断该数字是否出现过，即该 位 数字是否为1 &#123; a[i] ^= num; // 这里 异或 操作用于将该 位 数字从1变为0，其他位置不变，也可以用 -= b[j] ^= num; c[i / 3][j / 3] ^= num; continue; &#125; return false; &#125; &#125; return true; &#125;&#125;; 思路：这题我的解法用到了位操作，将 9 行、 9 列和每一个 3*3 的格子分别用两个一维数组和一个二维数组来表示，然后用这几个数组记录每一行、列和 3*3 的格子里面的数字是否出现过。这里用第0行来举例： 假设第0行，第0列的数字为1，然后1左移0位，得到0000 0000 0000 0001B,然后将其和a[0]（0000 0001 1111 1111B）进行异或操作，得到 0000 0001 1111 1110B，再假设第0行第1列数字依旧为1，那么将该数字和a[0]（0000 0001 1111 1110B）进行与操作，得到0（即false），然后就不会进入if语句内部，直接返回false。]]></content>
@@ -154,8 +166,8 @@
         <category>题解</category>
       </categories>
       <tags>
-        <tag>模板</tag>
         <tag>快速幂</tag>
+        <tag>模板</tag>
       </tags>
   </entry>
   <entry>
